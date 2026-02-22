@@ -16,11 +16,18 @@ const USDC_ABI = [
   'function decimals() view returns (uint8)',
 ];
 
-// Compiled bytecode placeholder: in production, compile Escrow.sol and paste bytecode here.
-// For now, deployEscrow expects the bytecode as a parameter or uses a pre-deployed address.
+// Default deployed TaskEscrow on Base mainnet
+const DEFAULT_ESCROW_ADDRESS = '0xe924B7ED0Bda332493607d2106326B5a33F7970f';
+
+// Compiled bytecode: loaded from build/ if deploying a new instance
 const ESCROW_BYTECODE = null; // Set after compiling contracts/Escrow.sol
 
 const STATUS_MAP = ['None', 'Active', 'Released', 'Disputed', 'Refunded'];
+
+/** Get the default deployed escrow address on Base mainnet */
+export function getDefaultEscrowAddress() {
+  return process.env.ESCROW_ADDRESS || DEFAULT_ESCROW_ADDRESS;
+}
 
 /** Hash a task ID string to bytes32 for the contract */
 export function hashTaskId(taskId) {

@@ -56,7 +56,8 @@ XMTP_ENV=production
 NETWORK=base
 CHAIN_ID=8453
 USDC_ADDRESS=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
-BASE_RPC=https://mainnet.base.org
+RPC_URL=https://mainnet.base.org
+ESCROW_ADDRESS=0xe924B7ED0Bda332493607d2106326B5a33F7970f
 ```
 
 Each agent brings its own wallet. No shared pool, no custodial account. One private key, full agent custody.
@@ -160,13 +161,11 @@ await worker.agent.start();
 ### Escrow: Locked Payments
 
 ```js
-import { deployEscrow, createEscrow, releaseEscrow, getEscrowStatus } from './src/escrow.js';
+import { createEscrow, releaseEscrow, getEscrowStatus, getDefaultEscrowAddress } from './src/escrow.js';
 import { loadWallet } from './src/wallet.js';
 
 const wallet = loadWallet(privateKey);
-
-// Deploy once (reuse the address)
-const { address: escrowAddr } = await deployEscrow(wallet, usdcAddress, bytecode);
+const escrowAddr = getDefaultEscrowAddress(); // 0xe924B7ED0Bda332493607d2106326B5a33F7970f on Base
 
 // Requestor locks USDC
 await createEscrow(wallet, escrowAddr, {
