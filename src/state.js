@@ -15,11 +15,16 @@ function loadState() {
     return {
       agents: {},
       tasks: [],
+      listings: [],
+      escrows: [],
       activity: [],
       stats: { totalTasks: 0, totalPaid: 0, totalClaims: 0, totalResults: 0 }
     };
   }
-  return JSON.parse(readFileSync(STATE_FILE, 'utf-8'));
+  const state = JSON.parse(readFileSync(STATE_FILE, 'utf-8'));
+  if (!state.listings) state.listings = [];
+  if (!state.escrows) state.escrows = [];
+  return state;
 }
 
 function saveState(state) {
@@ -120,6 +125,71 @@ export function logPayment(taskId, worker, amount, txHash) {
     at: new Date().toISOString()
   });
   if (state.activity.length > 50) state.activity = state.activity.slice(-50);
+  saveState(state);
+}
+
+export function logListing(listing) {
+  const state = loadState();
+  state.listings.push({
+    taskId: listing.taskId,
+    title: listing.title,
+    description: listing.description || '',
+    budget: listing.budget,
+    skills_needed: listing.skills_needed || [],
+    requestor: listing.requestor,
+    bids: 0,
+    status: 'open',
+    createdAt: new Date().toISOString()
+  });
+  state.activity.push({
+    type: 'listing_posted',
+    agent: listing.requestor,
+    task: listing.title,
+    amount: listing.budget,
+    at: new Date().toISOString()
+  });
+  if (state.activity.length > 50) state.activity = state.activity.slice(-50);
+  saveState(state);
+}
+
+export function logEscrow(escrow) {
+  const state = loadState();
+  state.escrows.push({
+    taskId: escrow.taskId,
+    requestor: escrow.requestor,
+    worker: escrow.worker,
+    amount: escrow.amount,
+    deadline: escrow.deadline,
+    status: escrow.status || 'active',
+    txHash: escrow.txHash || null,
+    createdAt: new Date().toISOString()
+  });
+  state.activity.push({
+    type: 'escrow_created',
+    agent: escrow.requestor,
+    taskId: escrow.taskId,
+    amount: parseFloat(escrow.amount),
+    at: new Date().toISOString()
+  });
+  if (state.activity.length > 50) state.activity = state.activity.slice(-50);
+  saveState(state);
+}
+
+export function updateEscrow(taskId, status, txHash) {
+  const state = loadState();
+  const escrow = state.escrows.find(e => e.taskId === taskId);
+  if (escrow) {
+    escrow.status = status;
+    if (txHash) escrow.releaseTxHash = txHash;
+    state.activity.push({
+      type: `escrow_${status}`,
+      agent: escrow.worker,
+      taskId,
+      amount: parseFloat(escrow.amount),
+      at: new Date().toISOString()
+    });
+    if (state.activity.length > 50) state.activity = state.activity.slice(-50);
+  }
   saveState(state);
 }
 
