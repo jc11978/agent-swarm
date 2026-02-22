@@ -1,0 +1,7 @@
+node_modules/
+.env
+.env.local
+.x_credentials
+.gh_classic_token
+*.key
+*.pem

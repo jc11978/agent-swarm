@@ -1,0 +1,74 @@
+{
+  "agents": {
+    "0x898C7edc53050D0cbC8b3664DB7Db6F216fd3C91": {
+      "address": "0x898C7edc53050D0cbC8b3664DB7Db6F216fd3C91",
+      "roles": [
+        "requestor"
+      ],
+      "earned": 0,
+      "spent": 2,
+      "tasksPosted": 1,
+      "tasksClaimed": 0,
+      "tasksCompleted": 0,
+      "firstSeen": "2026-02-21T23:09:17.125Z"
+    },
+    "0x94D1E6161b19712a96d810940ab4ac212F05673E": {
+      "address": "0x94D1E6161b19712a96d810940ab4ac212F05673E",
+      "roles": [
+        "worker"
+      ],
+      "earned": 2,
+      "spent": 0,
+      "tasksPosted": 0,
+      "tasksClaimed": 1,
+      "tasksCompleted": 1,
+      "firstSeen": "2026-02-21T23:09:17.126Z"
+    }
+  },
+  "tasks": [
+    {
+      "id": "task-backend-api",
+      "title": "Build REST API backend for agent dashboard",
+      "budget": "2.00",
+      "subtasks": 1,
+      "requestor": "0x898C7edc53050D0cbC8b3664DB7Db6F216fd3C91",
+      "status": "paid",
+      "createdAt": "2026-02-21T23:09:17.128Z"
+    }
+  ],
+  "activity": [
+    {
+      "type": "task_posted",
+      "agent": "0x898C7edc53050D0cbC8b3664DB7Db6F216fd3C91",
+      "task": "Build REST API backend for agent dashboard",
+      "amount": "2.00",
+      "at": "2026-02-21T23:09:17.128Z"
+    },
+    {
+      "type": "subtask_claimed",
+      "agent": "0x94D1E6161b19712a96d810940ab4ac212F05673E",
+      "taskId": "task-backend-api",
+      "at": "2026-02-21T23:09:17.130Z"
+    },
+    {
+      "type": "result_submitted",
+      "agent": "0x94D1E6161b19712a96d810940ab4ac212F05673E",
+      "taskId": "task-backend-api",
+      "at": "2026-02-21T23:09:17.131Z"
+    },
+    {
+      "type": "payment_sent",
+      "agent": "0x94D1E6161b19712a96d810940ab4ac212F05673E",
+      "taskId": "task-backend-api",
+      "amount": 2,
+      "txHash": "0x98ad83c3840e4e5ee2140a86c857cb5eb06a4a7def7a58dd4eb9b6a3255e9423",
+      "at": "2026-02-21T23:09:17.132Z"
+    }
+  ],
+  "stats": {
+    "totalTasks": 1,
+    "totalPaid": 2,
+    "totalClaims": 1,
+    "totalResults": 1
+  }
+}
