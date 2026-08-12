@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-danger: var(--danger);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.625rem;
+
+  --background: oklch(0.17 0.008 264);
+  --foreground: oklch(0.93 0.004 264);
+
+  --card: oklch(0.21 0.009 264);
+  --card-foreground: oklch(0.93 0.004 264);
+
+  --muted: oklch(0.26 0.009 264);
+  --muted-foreground: oklch(0.64 0.011 264);
+
+  --border: oklch(0.29 0.01 264);
+
+  /* signature accent — USDC / money */
+  --primary: oklch(0.82 0.15 82);
+  --primary-foreground: oklch(0.2 0.02 82);
+
+  /* agents / messaging */
+  --secondary: oklch(0.78 0.12 218);
+  --secondary-foreground: oklch(0.2 0.02 218);
+
+  --danger: oklch(0.68 0.16 22);
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* subtle grid texture for the technical feel */
+.grid-texture {
+  background-image:
+    linear-gradient(to right, color-mix(in oklch, var(--border) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklch, var(--border) 55%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.live-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
